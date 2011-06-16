@@ -2,9 +2,20 @@
 # Original BT4 script (C) by Offensive security
 # Fixes for BT5 by Vlatko Kosturjak, Kost
 
-btisoname=BT5-GNOME-32.iso
+if [ -z "$1" ]; then 
+	btisoname="BT5-GNOME-32.iso"
+else
+	btisoname="$1"
+fi
 
-clear
+if [ -z "$2" ]; then 
+	btiso="BT5-GNOME-32-custom.iso"
+else
+	btiso="$2"
+fi
+
+echo "[*] Using $btisoname as source"
+echo "[*] Using $btiso as dest"
 echo "##############################################################"
 echo "[*] BackTrack 5 Final customisation script"
 echo "[*] Setting up the build environment..."
@@ -88,11 +99,11 @@ cd extract-cd
 echo "[*] Creating iso ..."
 
 # mkisofs -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -V "BT4" -cache-inodes -r -J -l -o ../bt4-mod.iso .
-mkisofs -b isolinux/isolinux.bin -c isolinux/isolinux.cat -no-emul-boot -boot-load-size 4 -boot-info-table -V "BT5" -cache-inodes -r -J -l -o ../bt5-mod.iso .
+mkisofs -b isolinux/isolinux.bin -c isolinux/isolinux.cat -no-emul-boot -boot-load-size 4 -boot-info-table -V "BT5" -cache-inodes -r -J -l -o ../$btiso .
 
 cd ..
 
-echo "[*] Your modified BT5 is in $(pwd)/bt5-mod.iso"
+echo "[*] Your modified BT5 is in $(pwd)/$btiso"
 echo "##############################################################"
 
 
