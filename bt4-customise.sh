@@ -1,10 +1,24 @@
 #!/bin/bash
+# Original BT4 script (C) by Offensive security
+# Fixes for BT5 by Vlatko Kosturjak, Kost
 
-btisoname=bt4-pre-final.iso
+if [ -z "$1" ]; then 
+	btisoname="bt4-pre-final.iso"
+else
+	btisoname="$1"
+fi
+
+if [ -z "$2" ]; then 
+	btiso="bt4-pre-final-custom.iso"
+else
+	btiso="$2"
+fi
 
 clear
 echo "##############################################################"
 echo "[*] BackTrack 4 Final customisation script"
+echo "[*] Using $btisoname as source"
+echo "[*] Using $btiso as dest"
 echo "[*] Setting up the build environment..."
 
 services="inetutils-inetd tinyproxy iodined knockd openvpn atftpd ntop nstxd nstxcd apache2 sendmail atd dhcp3-server winbind miredo miredo-server pcscd wicd wacom cups bluetooth binfmt-support mysql"
@@ -85,11 +99,11 @@ cd extract-cd
 
 echo "[*] Creating iso ..."
 
-mkisofs -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -V "BT4" -cache-inodes -r -J -l -o ../bt4-mod.iso .
+mkisofs -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -V "BT4" -cache-inodes -r -J -l -o ../$btiso .
 
 cd ..
 
-echo "[*] Your modified BT4 is in $(pwd)/bt4-mod.iso"
+echo "[*] Your modified BT4 is in $(pwd)/$btiso"
 echo "##############################################################"
 
 
